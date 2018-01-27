@@ -209,20 +209,20 @@ function publishWinner() {
 		isLastGameFinish = true;
 		if(score_P1>score_P2) {
 			//alert("Winner is Player1");
-			document.getElementById("winnerText").innerHTML = "Player1";
+			document.getElementById("winnerText").innerHTML = "Winner : Player1";
 		}
 		else if(score_P1<score_P2) {
 			//alert("Winner is Player2");
-			document.getElementById("winnerText").innerHTML = "Player2";
+			document.getElementById("winnerText").innerHTML = "Winner : Player2";
 		}
 		else {
 			//alert("It's Tie");
-			document.getElementById("winnerText").innerHTML = "Both";
+			document.getElementById("winnerText").innerHTML = "It's Tie";
 		}
 
-		var newGame = setTimeout(reloadNew, 5000);	
+		var newGame = setTimeout(reloadNew, 15000);	
 		function reloadNew() {
-			//location.reload();
+			location.reload();
 		}
 		
 	}
