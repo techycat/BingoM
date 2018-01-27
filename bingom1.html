@@ -1,0 +1,148 @@
+<html>
+	<head>
+		<link href='https://fonts.googleapis.com/css?family=Cambay' rel='stylesheet' type='text/css'>
+			<link href='https://fonts.googleapis.com/css?family=Roboto:300' rel='stylesheet' type='text/css'>
+				<meta charset="utf-8" />
+				<title>Bingo</title>
+				<link rel="stylesheet" type="text/css" href="/css/bingomcss.css" />
+				<script type="text/javascript" src="/js/bingomjs.js"></script>
+			</head>
+			<body onload="newCard()">
+				<div id="container">
+					<div id="header">
+						<h1>Create a Bingo Card</h1>
+					</div>
+					<div id="content">
+						<div class="row">
+							<div class="column left" style="background-color:#aa5;">
+								<table id="bingotable1">
+									<tr>
+										<th class="orange">B</th>
+										<th class="orange">I</th>
+										<th class="orange">N</th>
+										<th class="orange">G</th>
+										<th class="orange">O</th>
+									</tr>
+									<tr>
+										<td id="P1_square0"> &nbsp;</td>
+										<td id="P1_square1"> &nbsp;</td>
+										<td id="P1_square2"> &nbsp;</td>
+										<td id="P1_square3"> &nbsp;</td>
+										<td id="P1_square4"> &nbsp;</td>
+									</tr>
+									<tr>
+										<td id="P1_square5"> &nbsp;</td>
+										<td id="P1_square6"> &nbsp;</td>
+										<td id="P1_square7"> &nbsp;</td>
+										<td id="P1_square8"> &nbsp;</td>
+										<td id="P1_square9"> &nbsp;</td>
+									</tr>
+									<tr>
+										<td id="P1_square10"> &nbsp;</td>
+										<td id="P1_square11"> &nbsp;</td>
+										<td id="P1_square12"> &nbsp;</td>
+										<td id="P1_square13"> &nbsp;</td>
+										<td id="P1_square14"> &nbsp;</td>
+									</tr>
+									<tr>
+										<td id="P1_square15"> &nbsp;</td>
+										<td id="P1_square16"> &nbsp;</td>
+										<td id="P1_square17"> &nbsp;</td>
+										<td id="P1_square18"> &nbsp;</td>
+										<td id="P1_square19"> &nbsp;</td>
+									</tr>
+									<tr>
+										<td id="P1_square20"> &nbsp;</td>
+										<td id="P1_square21"> &nbsp;</td>
+										<td id="P1_square22"> &nbsp;</td>
+										<td id="P1_square23"> &nbsp;</td>
+										<td id="P1_square24"> &nbsp;</td>
+									</tr>
+								</table>
+								<p style="padding-top:0px;">
+									<a href="#" onclick="startGame_P1()">Ready</a>______
+									<a href="#" onclick="anotherCard_P1()">New
+									</p>
+								</a>
+							</div>
+							<div class="column middle" style="background-color:#bb5;">
+								<table id="palyertable">
+									<tr>
+										<td>Player1</td>
+										<td>Player2</td>
+									</tr>
+									<tr>
+										<td id="P1_Score">&nbsp;</td>
+										<td id="P2_Score">&nbsp;</td>
+									</tr>
+								</table>
+								<table id="maintable">
+									<tr>
+										<td>Lucky Number</td>
+									</tr>
+									<tr>
+										<td id="luckyNum">&nbsp;</td>
+									</tr>
+									<tr>
+										<td>
+											<p id="winnerText">WINNER</p>
+											<p id="winnerName"> &nbsp;</p>
+										</td>
+									</tr>
+								</table>
+							</div>
+							<div class="column right" style="background-color:#aa5;">
+								<table id="bingotable2">
+									<tr>
+										<th class="orange">B</th>
+										<th class="orange">I</th>
+										<th class="orange">N</th>
+										<th class="orange">G</th>
+										<th class="orange">O</th>
+									</tr>
+									<tr>
+										<td id="P2_square0"> &nbsp;</td>
+										<td id="P2_square1"> &nbsp;</td>
+										<td id="P2_square2"> &nbsp;</td>
+										<td id="P2_square3"> &nbsp;</td>
+										<td id="P2_square4"> &nbsp;</td>
+									</tr>
+									<tr>
+										<td id="P2_square5"> &nbsp;</td>
+										<td id="P2_square6"> &nbsp;</td>
+										<td id="P2_square7"> &nbsp;</td>
+										<td id="P2_square8"> &nbsp;</td>
+										<td id="P2_square9"> &nbsp;</td>
+									</tr>
+									<tr>
+										<td id="P2_square10"> &nbsp;</td>
+										<td id="P2_square11"> &nbsp;</td>
+										<td id="P2_square12"> &nbsp;</td>
+										<td id="P2_square13"> &nbsp;</td>
+										<td id="P2_square14"> &nbsp;</td>
+									</tr>
+									<tr>
+										<td id="P2_square15"> &nbsp;</td>
+										<td id="P2_square16"> &nbsp;</td>
+										<td id="P2_square17"> &nbsp;</td>
+										<td id="P2_square18"> &nbsp;</td>
+										<td id="P2_square19"> &nbsp;</td>
+									</tr>
+									<tr>
+										<td id="P2_square20"> &nbsp;</td>
+										<td id="P2_square21"> &nbsp;</td>
+										<td id="P2_square22"> &nbsp;</td>
+										<td id="P2_square23"> &nbsp;</td>
+										<td id="P2_square24"> &nbsp;</td>
+									</tr>
+								</table>
+								<p>
+									<a href="#" onclick="startGame_P2()">Ready</a>______
+									<a href="#" onclick="anotherCard_P2()">New</a>
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</body>
+		</html>
