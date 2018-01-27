@@ -195,8 +195,8 @@ function startTheGame() {
 		document.getElementById("luckyNum").innerHTML = luckyNumber;
 		document.getElementById("P1_Score").innerHTML = score_P1;
 		document.getElementById("P2_Score").innerHTML = score_P2;
-			var intervalExec = setInterval(updateLuckyNum, 15000);
-			var runnerObj = setTimeout(test, 45000);
+			var intervalExec = setInterval(updateLuckyNum, 10000);
+			var runnerObj = setTimeout(test, 350000);
 			function test() {
 				clearInterval(intervalExec);
 				publishWinner();

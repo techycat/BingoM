@@ -10,25 +10,30 @@ var server_ip = process.env.IP || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0';
 app.get('/', function(req, res) {
 
  	console.log("URL : "+req.url);
- 	if(req.url.indexOf('.css') != -1) {
-    var cssFile = fs.readFileSync("./css/bingomcss.css");
-    res.writeHead(200,{'Content-Type': 'text/css'});
-    res.write(cssFile);
-    res.end();
-    }
-    else if(req.url.indexOf('.js') != -1) {
-    var jsFile = fs.readFileSync("./js/bingomjs.css");
-    res.writeHead(200,{'Content-Type': 'text/javascript'});
-    res.write(jsFile);
-    res.end();
-    }
-    else {
-    var htmlFile = fs.readFileSync("./bingom1.html");
+    var htmlFile = fs.readFileSync(__dirname+"/html/bingom.html");
     res.writeHead(200,{'Content-Type': 'text/html'});
     res.write(htmlFile);
     res.end();
-    }
+
 });
+app.get('/css/bingomcss.css', function(req, res) {
+
+ 	console.log("URL : "+req.url);
+    var cssFile = fs.readFileSync(__dirname+"/css/bingomcss.css");
+    res.writeHead(200,{'Content-Type': 'text/css'});
+    res.write(cssFile);
+    res.end();
+
+ });
+app.get('/js/bingomjs.js', function(req, res) {
+
+ 	console.log("URL : "+req.url);
+    var jsFile = fs.readFileSync(__dirname+"/js/bingomjs.js");
+    res.writeHead(200,{'Content-Type': 'text/javascript'});
+    res.write(jsFile);
+    res.end();
+
+ });
 
 app.listen(server_port,server_ip, function() {
 	console.log("Dir "+__dirname)

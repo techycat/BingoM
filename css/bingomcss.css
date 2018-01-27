@@ -1,5 +1,5 @@
 body {
-  background: #1abc9c;
+  background: #21618C;
   margin: 0;
 }
 
@@ -33,6 +33,7 @@ p a {
   text-align: center;
   font-weight: 600;
   font-size: 15pt;
+  color: #A93226;
 }
 #bingotable1 {
   float: right;
@@ -67,6 +68,7 @@ th, td {
   text-align: center;
   border: 3px solid black;
   width: 20%;
+  background:#5499C7;
 }
 * {
     box-sizing: border-box;
@@ -95,5 +97,5 @@ th, td {
     clear: both;
 }
 .orange {
-  background: #9b59b6;
+  background: #16A085;
 }
