@@ -17,22 +17,21 @@ p a {
   color: #2e8b57;
 }
 
-#squarefree {
-  font-family: Helvetica;
+#luckyNum {
+  font-family: Courier;
   margin: 0 auto;
-  background: #5dc4de;
-  text-align: center;
-  font-weight: 600;
-  font-size: 15pt;
-}
 
-#winnerText {
-  font-family: Helvetica;
-  margin: 0 auto;
-  color: #5dc4de;
   text-align: center;
   font-weight: 600;
-  font-size: 15pt;
+  font-size: 45px;
+  color: #784212;
+}
+#winnerText {
+  font-family: Georgia;
+  margin: 0 auto;
+  text-align: center;
+  font-weight: 600;
+  font-size: 18px;
   color: #A93226;
 }
 #bingotable1 {
