@@ -288,10 +288,10 @@ function startTheGame() {
      var intervalSplit1 = setTimeout(reduceInterval,90000);
       //baseInterval = baseInterval - 3000;
       //var timeTaken2 = timeTaken1+(baseInterval - 4000)*10; 
-      var intervalSplit2 = setTimeout(reduceInterval,140000);
+      var intervalSplit2 = setTimeout(reduceInterval,150000);
       //baseInterval = baseInterval - 4000;
       //var timeTaken3 = timeTaken2+(baseInterval - 4000)*10; 
-      var runnerObj = setTimeout(finishGame, 1500000);
+      var runnerObj = setTimeout(finishGame, 160000);
       //var runnerObj = setTimeout(finishGame, 157000);
     }
       function reduceInterval() {
