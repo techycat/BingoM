@@ -22,7 +22,41 @@ var isCornerPatternFound_P2 = false;
 var isFullPatternFound_P1 = false;
 var isFullPatternFound_P2 = false;
 var isLastGameFinish = true;
+var claimArray_P1 = new Array(14);
+var claimArray_P2 = new Array(14);
+var claimSuccessArray_P1 = new Array(14);
+var claimSuccessArray_P2 = new Array(14);
+//TEST
+var debug = false;
+var LuckNumIndex=0;
+var testArr = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25];
 
+function main() {
+  setUP();
+  newCard();
+}
+function setUP() {
+  var isPlayer1_Ready=false;
+  var isPlayer2_Ready=false;
+  var isGameRunning = false;
+
+  for(var k=0; k<claimArray_P1.length; k++) {
+      claimArray_P1[k] = false;
+      claimArray_P2[k] = false; 
+      claimSuccessArray_P1[k] = 0; 
+      claimSuccessArray_P2[k] = 0; 
+    }
+
+//   var header = document.getElementById("triggerElems");
+//   var btns = header.getElementsByClassName("btn");
+//   for (var i = 0; i < btns.length; i++) {
+//     btns[i].addEventListener("click", function() {
+//       var current = document.getElementsByClassName("active");
+//       current[0].className = current[0].className.replace(" active", "");
+//       this.className += " active";
+//     });
+// }
+}
 function newCard_P1() {
   //Starting loop through each square card
   for(var i=0; i < 25; i++) {  //<--always this code for loops. change in red
@@ -45,13 +79,16 @@ function newCard() {
 function setSquare_P1(currSquare,thisSquare) {
   var currSquare = "P1_square"+thisSquare;
   var newNum;
-  
-  var colPlace =new Array(0,1,2,3,4,0,1,2,3,4,0,1,2,3,4,0,1,2,3,4,0,1,2,3,4);
-  
-  do {
-    newNum = getNewNum();
+  if(!debug) {
+    do {
+      newNum = getNewNum();
+    }
+    while (usedNums_P1[newNum] || usedNums_P2[newNum]);
   }
-  while (usedNums_P1[newNum] || usedNums_P2[newNum]);
+  else {
+    newNum=thisSquare+1;
+  }
+  
   
   usedNums_P1[newNum] = true;
   //usedNums_P2[newNum] = true;
@@ -73,11 +110,16 @@ function setSquare_P1(currSquare,thisSquare) {
 function setSquare_P2(currSquare,thisSquare) {
   var currSquare = "P2_square"+thisSquare;
   var newNum;
-  
-  do {
-    newNum =getNewNum();
+  if(!debug) {
+    do {
+      newNum =getNewNum();
+    }
+    while (usedNums_P2[newNum] || usedNums_P1[newNum]);
   }
-  while (usedNums_P2[newNum] || usedNums_P1[newNum]);
+  else {
+    newNum=26+thisSquare;
+  }
+  
   //usedNums_P1[newNum] = true;
   usedNums_P2[newNum] = true;
   var parent = document.getElementById(currSquare);
@@ -93,23 +135,23 @@ function setSquare_P2(currSquare,thisSquare) {
   parent.appendChild(link);
   //document.getElementById(currSquare).innerHTML = newNum;
 }
-
 function getNewNum() {
   return Math.floor(Math.random() * 75)+1;
   
 }
 
 function anotherCard_P1() {
-  if(!isGameRunning) {
+  if(!isGameRunning && !isPlayer1_Ready) {
     for(var i=1; i<usedNums_P1.length; i++) {
       usedNums_P1[i] = false;
     }
   
     newCard_P1();
+    var newGameBtn = document.getElementById("myDIV");
   }
 }
 function anotherCard_P2() {
-  if(!isGameRunning) {
+  if(!isGameRunning && !isPlayer2_Ready) {
     for(var i=1; i<usedNums_P2.length; i++) {
       usedNums_P2[i] = false;
     }
@@ -186,9 +228,28 @@ function updateBingo_P2(cell) {
       document.getElementById("P2_Score").innerHTML = score_P2;
     }
   }
-  
-
 }
+
+function updateClaim_P1(claim) {
+  if(!isGameRunning) {
+    if(claim<14) {
+      var claimElem=document.getElementById("P1_claim"+claim);
+      claimElem.style.backgroundColor = "green"
+      claimArray_P1[claim] = true;
+      claimSuccessArray_P1[claim] = 1;
+    }
+  }
+}function updateClaim_P2(claim) {
+  if(!isGameRunning) {
+    if(claim<14) {
+      var claimElem=document.getElementById("P2_claim"+claim);
+      claimElem.style.backgroundColor = "green"
+      claimArray_P2[claim] = true;
+      claimSuccessArray_P2[claim] = 1;
+    }
+  }
+}
+
 function startTheGame() {
   if(!isGameRunning) {
     for(var i=1; i<usedNums_P1.length; i++) {
@@ -203,7 +264,7 @@ function startTheGame() {
       isColMatchFound_P2[j] = false;
 
     }
-
+    
     var isCornerPatternFound_P1 = false;
     var isCornerPatternFound_P2 = false;
     var isFullPatternFound_P1 = false;
@@ -215,19 +276,27 @@ function startTheGame() {
     updateLuckyNum();
     document.getElementById("P1_Score").innerHTML = 0;
     document.getElementById("P2_Score").innerHTML = 0;
-    var baseInterval = 12000;
-    var intervalExec = setInterval(updateLuckyNum, baseInterval);
-    var timeTaken1 = baseInterval*10; 
-    var intervalSplit1 = setTimeout(reduceInterval,timeTaken1);
-    baseInterval = baseInterval - 3000;
-    var timeTaken2 = timeTaken1+baseInterval*10; 
-    var intervalSplit2 = setTimeout(reduceInterval,timeTaken2);
-    baseInterval = baseInterval - 3000;
-    var timeTaken3 = timeTaken2+baseInterval*10; 
-    var runnerObj = setTimeout(finishGame, timeTaken3+2000);
-
+    if(debug) {
+      var baseInterval = 10000;
+      var intervalExec = setInterval(updateLuckyNum, baseInterval);
+      var runnerObj = setTimeout(finishGame, 250000);
+    }
+    else {
+      var baseInterval = 9000;
+      var intervalExec = setInterval(updateLuckyNum, baseInterval);
+      //var timeTaken1 = baseInterval*10; 
+     var intervalSplit1 = setTimeout(reduceInterval,90000);
+      //baseInterval = baseInterval - 3000;
+      //var timeTaken2 = timeTaken1+(baseInterval - 4000)*10; 
+      var intervalSplit2 = setTimeout(reduceInterval,140000);
+      //baseInterval = baseInterval - 4000;
+      //var timeTaken3 = timeTaken2+(baseInterval - 4000)*10; 
+      var runnerObj = setTimeout(finishGame, 1500000);
+      //var runnerObj = setTimeout(finishGame, 157000);
+    }
       function reduceInterval() {
         clearInterval(intervalExec);
+        baseInterval = baseInterval - 4000;
         intervalExec = setInterval(updateLuckyNum, baseInterval);
       }
       function finishGame() {
@@ -236,10 +305,22 @@ function startTheGame() {
       }
   }
 }
+
+function finalScoreUpdate() {
+  for(var i=0;i<claimSuccessArray_P1.length;i++) {
+    if(claimSuccessArray_P1[i]==1) {
+      score_P1=score_P1-5;
+    }
+    if(claimSuccessArray_P2[i]==1) {
+      score_P2=score_P2-5;
+    }
+  }
+}
 function publishWinner() {
   if(isGameRunning) {
     isGameRunning = false;
     isLastGameFinish = true;
+    finalScoreUpdate();
     if(score_P1>score_P2) {
       //alert("Winner is Player1");
       document.getElementById("winnerText").innerHTML = "Winner : Player1";
@@ -261,7 +342,14 @@ function publishWinner() {
   }
 }
 function updateLuckyNum() {
-  luckyNumber = getLuckyNumber();
+  if(!debug) {
+    luckyNumber = getLuckyNumber();
+  }
+  else {
+    luckyNumber=testArr[LuckNumIndex];
+    LuckNumIndex=LuckNumIndex+1;
+  }
+  
   document.getElementById("luckyNum").innerHTML = luckyNumber;
   // luckyNumCount=luckyNumCount+1;
   // document.getElementById("luckCount").innerHTML = luckyNumCount;
@@ -286,21 +374,41 @@ function checkPatternExist(player,bingoArray) {
       if(bingoArray[0] && bingoArray[4] && bingoArray[20] && bingoArray[24]) {
         score_P1=score_P1+10;
         isCornerPatternFound_P1=true;
+        if(claimArray_P1[1]) {
+          claimSuccessArray_P1[1] = 2;
+          score_P1=score_P1+10;
+        }
       }
     }
     for(var i=0;i<5;i++) {
       if(!isRowMatchFound_P1[i]){
         if(bingoArray[i*5+0] && bingoArray[i*5+1] && bingoArray[i*5+2] && bingoArray[i*5+3] && bingoArray[i*5+4]) {
-          score_P1=score_P1+5;
+          score_P1=score_P1+10;
           isRowMatchFound_P1[i] = true;
+          if(claimArray_P1[2+i]) {
+             claimSuccessArray_P1[2+i] = 2;
+             score_P1=score_P1+10;
+          }
+          if(claimArray_P1[12] && claimSuccessArray_P1[12] != 2) {
+             claimSuccessArray_P1[12] = 2;
+             score_P1=score_P1+5;
+          }
         }
       }
     }
     for(var i=0;i<5;i++) {
       if(!isColMatchFound_P1[i]){
         if(bingoArray[i] && bingoArray[i+5] && bingoArray[i+10] && bingoArray[i+15] && bingoArray[i+20]) {
-          score_P1=score_P1+5;
+          score_P1=score_P1+10;
           isColMatchFound_P1[i] = true;
+          if(claimArray_P1[7+i]) {
+             claimSuccessArray_P1[7+i] = 2;
+             score_P1=score_P1+10;
+          }
+          if(claimArray_P1[13] && claimSuccessArray_P1[13] != 2) {
+             claimSuccessArray_P1[13] = 2;
+             score_P1=score_P1+5;
+          }
         }
       }
     }
@@ -315,6 +423,10 @@ function checkPatternExist(player,bingoArray) {
       if(i>=25) {
         isFullPatternFound_P1=true;
         score_P1=score_P1+25;
+        if(claimArray_P1[0]) {
+             claimSuccessArray_P1[0] = 2;
+             score_P1=score_P1+25;
+          }
         publishWinner();
       }
     }
@@ -327,21 +439,42 @@ function checkPatternExist(player,bingoArray) {
       if(bingoArray[0] && bingoArray[4] && bingoArray[24] && bingoArray[20]) {
         score_P2=score_P2+10;
         isCornerPatternFound_P2=true;
+        if(claimArray_P2[1]) {
+          claimSuccessArray_P2[1] = 2;
+          score_P2=score_P2+10;
+        }
+
       }
     }
     for(var i=0;i<5;i++) {
       if(!isRowMatchFound_P2[i]){
         if(bingoArray[i*5+0] && bingoArray[i*5+1] && bingoArray[i*5+2] && bingoArray[i*5+3] && bingoArray[i*5+4]) {
-          score_P2=score_P2+5;
+          score_P2=score_P2+10;
           isRowMatchFound_P2[i] = true;
+          if(claimArray_P2[2+i]) {
+             claimSuccessArray_P2[2+i] = 2;
+             score_P2=score_P2+10;
+          }
+          if(claimArray_P2[12] && claimSuccessArray_P2[12] != 2) {
+             claimSuccessArray_P2[12] = 2;
+             score_P2=score_P2+5;
+          }
         }
       }
     }
     for(var i=0;i<5;i++) {
       if(!isColMatchFound_P2[i]){
         if(bingoArray[i] && bingoArray[i+5] && bingoArray[i+10] && bingoArray[i+15] && bingoArray[i+20]) {
-          score_P2=score_P2+5;
+          score_P2=score_P2+10;
           isColMatchFound_P2[i] = true;
+          if(claimArray_P2[7+i]) {
+             claimSuccessArray_P2[7+i] = 2;
+             score_P2=score_P2+10;
+          }
+          if(claimArray_P2[13] && claimSuccessArray_P2[13] != 2) {
+             claimSuccessArray_P2[13] = 2;
+             score_P2=score_P2+5;
+          }
         }
       }
     }
@@ -356,11 +489,13 @@ function checkPatternExist(player,bingoArray) {
       if(i>=25) {
         isFullPatternFound_P2=true;
         score_P2=score_P2+25;
+        if(claimArray_P2[0]) {
+             claimSuccessArray_P2[0] = 2;
+             score_P2=score_P2+25;
+          }
         publishWinner();
       }
     }
     document.getElementById("P2_Score").innerHTML = score_P2;
   }
-  
-  
 }
