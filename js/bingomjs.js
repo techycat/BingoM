@@ -321,6 +321,8 @@ function publishWinner() {
     isGameRunning = false;
     isLastGameFinish = true;
     finalScoreUpdate();
+    document.getElementById("P1_Score").innerHTML = score_P1;
+    document.getElementById("P2_Score").innerHTML = score_P2;
     if(score_P1>score_P2) {
       //alert("Winner is Player1");
       document.getElementById("winnerText").innerHTML = "Winner : Player1";
