@@ -340,7 +340,7 @@ function publishWinner() {
       //alert("It's Tie");
       document.getElementById("winnerText").innerHTML = "It's Tie";
     }
-    alert("luckyNumCount : "+luckyNumCount);
+    //alert("luckyNumCount : "+luckyNumCount);
     var newGame = setTimeout(reloadNew, 30000); 
     function reloadNew() {
       location.reload();
