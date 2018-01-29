@@ -22,6 +22,8 @@ var isCornerPatternFound_P2 = false;
 var isFullPatternFound_P1 = false;
 var isFullPatternFound_P2 = false;
 var isLastGameFinish = true;
+
+var canClaim = true;
 var claimArray_P1 = new Array(14);
 var claimArray_P2 = new Array(14);
 var claimSuccessArray_P1 = new Array(14);
@@ -36,9 +38,10 @@ function main() {
   newCard();
 }
 function setUP() {
-  var isPlayer1_Ready=false;
-  var isPlayer2_Ready=false;
-  var isGameRunning = false;
+  isPlayer1_Ready=false;
+  isPlayer2_Ready=false;
+  isGameRunning = false;
+  canClaim = true;
 
   for(var k=0; k<claimArray_P1.length; k++) {
       claimArray_P1[k] = false;
@@ -231,7 +234,7 @@ function updateBingo_P2(cell) {
 }
 
 function updateClaim_P1(claim) {
-  if(!isGameRunning) {
+  if(canClaim) {
     if(claim<14) {
       var claimElem=document.getElementById("P1_claim"+claim);
       claimElem.style.backgroundColor = "green"
@@ -240,7 +243,7 @@ function updateClaim_P1(claim) {
     }
   }
 }function updateClaim_P2(claim) {
-  if(!isGameRunning) {
+  if(canClaim) {
     if(claim<14) {
       var claimElem=document.getElementById("P2_claim"+claim);
       claimElem.style.backgroundColor = "green"
@@ -284,24 +287,26 @@ function startTheGame() {
     else {
       var baseInterval = 9000;
       var intervalExec = setInterval(updateLuckyNum, baseInterval);
-      //var timeTaken1 = baseInterval*10; 
-     var intervalSplit1 = setTimeout(reduceInterval,90000);
+      //var timeTaken1 = baseInterval*12; 
+     var intervalSplit1 = setTimeout(reduceInterval,108000);
       //baseInterval = baseInterval - 3000;
       //var timeTaken2 = timeTaken1+(baseInterval - 4000)*10; 
-      var intervalSplit2 = setTimeout(reduceInterval,150000);
+      var intervalSplit2 = setTimeout(reduceInterval,168000);
       //baseInterval = baseInterval - 4000;
-      //var timeTaken3 = timeTaken2+(baseInterval - 4000)*10; 
-      var runnerObj = setTimeout(finishGame, 160000);
+      //var timeTaken3 = timeTaken2+(baseInterval - 4000)*12; 
+      var runnerObj = setTimeout(finishGame, 180000);
       //var runnerObj = setTimeout(finishGame, 157000);
     }
       function reduceInterval() {
         clearInterval(intervalExec);
         baseInterval = baseInterval - 4000;
+        canClaim = false;
         intervalExec = setInterval(updateLuckyNum, baseInterval);
       }
       function finishGame() {
         clearInterval(intervalExec);
         publishWinner();
+        canClaim = true;
       }
   }
 }
