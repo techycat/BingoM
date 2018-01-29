@@ -287,14 +287,14 @@ function startTheGame() {
     else {
       var baseInterval = 9000;
       var intervalExec = setInterval(updateLuckyNum, baseInterval);
-      //var timeTaken1 = baseInterval*12; 
-     var intervalSplit1 = setTimeout(reduceInterval,108000);
+      //var timeTaken1 = baseInterval*14; 
+     var intervalSplit1 = setTimeout(reduceInterval,126000);
       //baseInterval = baseInterval - 3000;
-      //var timeTaken2 = timeTaken1+(baseInterval - 4000)*10; 
-      var intervalSplit2 = setTimeout(reduceInterval,168000);
+      //var timeTaken2 = timeTaken1+(baseInterval - 4000)*12; 
+      var intervalSplit2 = setTimeout(reduceInterval,186000);
       //baseInterval = baseInterval - 4000;
-      //var timeTaken3 = timeTaken2+(baseInterval - 4000)*12; 
-      var runnerObj = setTimeout(finishGame, 180000);
+      //var timeTaken3 = timeTaken2+(baseInterval - 4000)*10; 
+      var runnerObj = setTimeout(finishGame, 196000);
       //var runnerObj = setTimeout(finishGame, 157000);
     }
       function reduceInterval() {
@@ -340,7 +340,7 @@ function publishWinner() {
       //alert("It's Tie");
       document.getElementById("winnerText").innerHTML = "It's Tie";
     }
-
+    alert("luckyNumCount : "+luckyNumCount);
     var newGame = setTimeout(reloadNew, 30000); 
     function reloadNew() {
       location.reload();
@@ -356,7 +356,8 @@ function updateLuckyNum() {
     luckyNumber=testArr[LuckNumIndex];
     LuckNumIndex=LuckNumIndex+1;
   }
-  
+  luckyNumCount=luckyNumCount+1;
+ 
   document.getElementById("luckyNum").innerHTML = luckyNumber;
   // luckyNumCount=luckyNumCount+1;
   // document.getElementById("luckCount").innerHTML = luckyNumCount;
