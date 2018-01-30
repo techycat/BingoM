@@ -58,20 +58,15 @@ h1, p {
     color: white;
 }
 
-
-.btn {
-    border: none;
-    outline: none;
-    padding: 10px 16px;
-    background-color: #f1f1f1;
-    cursor: pointer;
-    font-size: 18px;
+#myProgress {
+  width: 100%;
+  background-color: #ddd;
 }
 
-/* Style the active class, and buttons on mouse-over */
-.active, .btn:hover {
-    background-color: #666;
-    color: white;
+#myBar {
+  width: 1%;
+  height: 12px;
+  background-color: red;
 }
 
 .triggers {
@@ -96,13 +91,30 @@ h1, p {
   font-size: 18px;
   color: #A93226;
 }
+#winnerDetails {
+  width:100%;
+  margin: 0 auto;
+  border: 1px solid black;
+  border-radius: 6px;
+  background: #BA4A00;  
+}
 
 #playDetails {
   margin: 0 auto;
   border: 0px;
   border-collapse: collapse;
 }
-
+.playOptions {
+  padding:3px;
+  text-align: center;
+  background: #D7DBDD;
+}
+table.maintable1 p a{
+  font-size: 20px;
+  color:green;
+  font-style:italic;
+  text-decoration: none;
+}
 
 #playDetails tr td {
   margin: 0 auto;
@@ -127,6 +139,7 @@ table.claimtable tr td{
 table.claimtable p a{
   font-size: 12px;
   color:black;
+  text-decoration: none;
 }
 #claims_P1 {
   margin: 0 auto;

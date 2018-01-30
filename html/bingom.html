@@ -103,7 +103,7 @@
 							<div class="column middle" style="background-color:#bb5;">
 								<table id="playertable">
 									<tr>
-										<td class="noBorder">Player1</td>
+										<td>Player1</td>
 										<td>Player2</td>
 									</tr>
 									<tr>
@@ -111,66 +111,85 @@
 										<td id="P2_Score">&nbsp;</td>
 									</tr>
 								</table>
+								<table id="winnerDetails">
+									<tr>
+										<td><p id="winnerText">WINNER</p></td>
+									</tr>
+									<tr><td>
+											<div id="myProgress">
+											<div id="myBar"></div>
+											</div>
+										</td>
+									</tr>
+								</table>
 								<table id="playDetails">
 									<tr><td valign="top">
 										<table id="claims_P1" class="claimtable">
 											<tr><th>Claims</th></tr>
-											<tr><td><p class="claims">
+											<tr><td id="P1_claim_cell0"><p class="claims">
 												<a id="P1_claim0" href="#" onclick="updateClaim_P1(0)">Full</a></p>
 											</td></tr>
-											<tr><td><p class="claims">
+											<tr><td id="P1_claim_cell1"><p class="claims">
 												<a id="P1_claim1" href="#" onclick="updateClaim_P1(1)">Corner</a></p>
 											</td></tr>
-												<tr><td><p class="claims">
+												<tr><td id="P1_claim_cell2"><p class="claims">
 												<a id="P1_claim2" href="#" onclick="updateClaim_P1(2)">Row_1</a></p>
 											</td></tr>
-											<tr><td><p class="claims">
+											<tr><td id="P1_claim_cell3"><p class="claims">
 												<a id="P1_claim3" href="#" onclick="updateClaim_P1(3)">Row_2</a></p>
 											</td></tr>
-											<tr><td><p class="claims">
+											<tr><td id="P1_claim_cell4"><p class="claims">
 												<a id="P1_claim4" href="#" onclick="updateClaim_P1(4)">Row_3</a></p>
 											</td></tr>
-											<tr><td><p class="claims">
+											<tr><td id="P1_claim_cell5"><p class="claims">
 												<a id="P1_claim5" href="#" onclick="updateClaim_P1(5)">Row_4</a></p>
 											</td></tr>
-											<tr><td><p class="claims">
+											<tr><td id="P1_claim_cell6"><p class="claims">
 												<a id="P1_claim6" href="#" onclick="updateClaim_P1(6)">Row_5</a></p>
 											</td></tr>
-											<tr><td><p class="claims">
+											<tr><td id="P1_claim_cell7"><p class="claims">
 												<a id="P1_claim7" href="#" onclick="updateClaim_P1(7)">Col_1</a></p>
 											</td></tr>
-											<tr><td><p class="claims">
+											<tr><td id="P1_claim_cell8"><p class="claims">
 												<a id="P1_claim8" href="#" onclick="updateClaim_P1(8)">Col_2</a></p>
 											</td></tr>
-											<tr><td><p class="claims">
+											<tr><td id="P1_claim_cell9"><p class="claims">
 												<a id="P1_claim9" href="#" onclick="updateClaim_P1(9)">Col_3</a></p>
 											</td></tr>
-											<tr><td><p class="claims">
+											<tr><td id="P1_claim_cell10"><p class="claims">
 												<a id="P1_claim10" href="#" onclick="updateClaim_P1(10)">Col_4</a></p>
 											</td></tr>
-											<tr><td><p class="claims">
+											<tr><td id="P1_claim_cell11"><p class="claims">
 												<a id="P1_claim11" href="#" onclick="updateClaim_P1(11)">Col_5</a></p>
 											</td></tr>
-											<tr><td><p class="claims">
+											<tr><td id="P1_claim_cell12"><p class="claims">
 												<a id="P1_claim12" href="#" onclick="updateClaim_P1(12)">AnyRow</a></p>
 											</td></tr>
-											<tr><td><p class="claims">
+											<tr><td id="P1_claim_cell3"><p class="claims">
 												<a id="P1_claim13" href="#" onclick="updateClaim_P1(13)">AnyCol</a></p>
 											</td></tr>
 										</table>
 									</td>
 									<td valign="top">
-										<table id="maintable">
+										<table id="maintable" class="maintable1">
 											<tr>
-												<td>Lucky Number</td>
+												<td>Lucky
+												</td>
 											</tr>
 											<tr>
 												<td id="luckyNum">&nbsp;</td>
 											</tr>
 											<tr>
-												<td>
-													<p id="winnerText">WINNER</p>
-													<p id="winnerName"> &nbsp;</p>
+												<td id="playComputerId">
+													<p class="playOptions">
+														<a id="playComputer" href="#" onclick="playRobo()">Computer</a></p>
+
+												</td>
+											</tr>
+											<tr>
+												<td id="diffLevel">
+													<p class="playOptions">
+														<a id="playDifficult" href="#" onclick="playDiffLevel()">Difficult</a></p>
 												</td>
 											</tr>
 										</table>
@@ -179,46 +198,46 @@
 									<td valign="top">
 										<table id="claims_P2" class="claimtable">
 											<tr><th>Claims</th></tr>
-											<tr><td><p class="claims">
+											<tr><td id="P2_claim_cell0"><p class="claims">
 												<a id="P2_claim0" href="#" onclick="updateClaim_P2(0)">Full</a></p>
 											</td></tr>
-											<tr><td><p class="claims">
+											<tr><td id="P2_claim_cell1"><p class="claims">
 												<a id="P2_claim1" href="#" onclick="updateClaim_P2(1)">Corner</a></p>
 											</td></tr>
-												<tr><td><p class="claims">
+												<tr><td id="P2_claim_cell2"><p class="claims">
 												<a id="P2_claim2" href="#" onclick="updateClaim_P2(2)">Row_1</a></p>
 											</td></tr>
-											<tr><td><p class="claims">
+											<tr><td id="P2_claim_cell3"><p class="claims">
 												<a id="P2_claim3" href="#" onclick="updateClaim_P2(3)">Row_2</a></p>
 											</td></tr>
-											<tr><td><p class="claims">
+											<tr><td id="P2_claim_cell4"><p class="claims">
 												<a id="P2_claim4" href="#" onclick="updateClaim_P2(4)">Row_3</a></p>
 											</td></tr>
-											<tr><td><p class="claims">
+											<tr><td id="P2_claim_cell5"><p class="claims">
 												<a id="P2_claim5" href="#" onclick="updateClaim_P2(5)">Row_4</a></p>
 											</td></tr>
-											<tr><td><p class="claims">
+											<tr><td id="P2_claim_cell6"><p class="claims">
 												<a id="P2_claim6" href="#" onclick="updateClaim_P2(6)">Row_5</a></p>
 											</td></tr>
-											<tr><td><p class="claims">
+											<tr><td id="P2_claim_cell7"><p class="claims">
 												<a id="P2_claim7" href="#" onclick="updateClaim_P2(7)">Col_1</a></p>
 											</td></tr>
-											<tr><td><p class="claims">
+											<tr><td id="P2_claim_cell8"><p class="claims">
 												<a id="P2_claim8" href="#" onclick="updateClaim_P2(8)">Col_2</a></p>
 											</td></tr>
-											<tr><td><p class="claims">
+											<tr><td id="P2_claim_cell9"><p class="claims">
 												<a id="P2_claim9" href="#" onclick="updateClaim_P2(9)">Col_3</a></p>
 											</td></tr>
-											<tr><td><p class="claims">
+											<tr><td id="P2_claim_cell10"><p class="claims">
 												<a id="P2_claim10" href="#" onclick="updateClaim_P2(10)">Col_4</a></p>
 											</td></tr>
-											<tr><td><p class="claims">
+											<tr><td id="P2_claim_cell11"><p class="claims">
 												<a id="P2_claim11" href="#" onclick="updateClaim_P2(11)">Col_5</a></p>
 											</td></tr>
-											<tr><td><p class="claims">
+											<tr><td id="P2_claim_cell12"><p class="claims">
 												<a id="P2_claim12" href="#" onclick="updateClaim_P2(12)">AnyRow</a></p>
 											</td></tr>
-											<tr><td><p class="claims">
+											<tr><td id="P2_claim_cell3"><p class="claims">
 												<a id="P2_claim13" href="#" onclick="updateClaim_P2(13)">AnyCol</a></p>
 											</td></tr>
 										</table>

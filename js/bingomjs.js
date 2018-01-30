@@ -1,11 +1,11 @@
-var usedNums_P1 = new Array(76);
-var usedNums_P2 = new Array(76);
-var usedLuckyNums = new Array(76);
+var usedNums_P1 = new Array(61);
+var usedNums_P2 = new Array(61);
+var usedLuckyNums = new Array(61);
 
 var bingoTable_P1 = new Array(25);
 var bingoTable_P2 = new Array(25);
-var bingoRunningTable_P1 = new Array(24);
-var bingoRunningTable_P2 = new Array(24);
+var bingoRunningTable_P1 = new Array(25);
+var bingoRunningTable_P2 = new Array(25);
 var luckyNumber = 0;
 var luckyNumCount = 0;
 var isPlayer1_Ready=false;
@@ -28,6 +28,13 @@ var claimArray_P1 = new Array(14);
 var claimArray_P2 = new Array(14);
 var claimSuccessArray_P1 = new Array(14);
 var claimSuccessArray_P2 = new Array(14);
+
+var startInterval = 8000;
+var maxTime = 170000;
+
+var isRoboPlay = true;
+var claimScoreRobo = new Array(14);
+var claimMaxScore = [25,4,5,5,5,5,5,5,5,5,5,5,5,5];
 //TEST
 var debug = false;
 var LuckNumIndex=0;
@@ -38,6 +45,7 @@ function main() {
   newCard();
 }
 function setUP() {
+  isRoboPlay = false;
   isPlayer1_Ready=false;
   isPlayer2_Ready=false;
   isGameRunning = false;
@@ -48,18 +56,22 @@ function setUP() {
       claimArray_P2[k] = false; 
       claimSuccessArray_P1[k] = 0; 
       claimSuccessArray_P2[k] = 0; 
+      claimScoreRobo[k] = 0;
     }
-
-//   var header = document.getElementById("triggerElems");
-//   var btns = header.getElementsByClassName("btn");
-//   for (var i = 0; i < btns.length; i++) {
-//     btns[i].addEventListener("click", function() {
-//       var current = document.getElementsByClassName("active");
-//       current[0].className = current[0].className.replace(" active", "");
-//       this.className += " active";
-//     });
-// }
 }
+
+function playRobo() {
+  isRoboPlay=true;
+  var robo=document.getElementById('playComputerId');
+  robo.style.backgroundColor='green';
+  startGame_P2();
+}
+function playDiffLevel() {
+  startInterval=8000;
+  var diffLevel=document.getElementById('diffLevel');
+  diffLevel.style.backgroundColor='green';
+}
+
 function newCard_P1() {
   //Starting loop through each square card
   for(var i=0; i < 25; i++) {  //<--always this code for loops. change in red
@@ -139,7 +151,7 @@ function setSquare_P2(currSquare,thisSquare) {
   //document.getElementById(currSquare).innerHTML = newNum;
 }
 function getNewNum() {
-  return Math.floor(Math.random() * 75)+1;
+  return Math.floor(Math.random() * 60)+1;
   
 }
 
@@ -165,6 +177,7 @@ function anotherCard_P2() {
 }
 
 function startGame_P1() {
+  if(!isGameRunning) {
   for(var i=0; i<bingoTable_P1.length-1; i++) {
     var square = document.getElementById("P1_square"+i);
     bingoTable_P1[i]=square.innerText;
@@ -177,6 +190,7 @@ function startGame_P1() {
   if(isPlayer2_Ready){
     startTheGame();
   }
+}
 }
 
 function updateBingo_P1(cell) {
@@ -199,6 +213,7 @@ function updateBingo_P1(cell) {
 
 }
 function startGame_P2() {
+  if(!isGameRunning) {
   for(var i=0; i<bingoTable_P2.length-1; i++) {
     var square = document.getElementById("P2_square"+i);
     bingoTable_P2[i]=square.innerText;
@@ -212,10 +227,12 @@ function startGame_P2() {
     startTheGame();
   }
 }
+}
 
 function updateBingo_P2(cell) {
-  //alert("Check Value");
+  
   if(isGameRunning) {
+    //alert("Check Value");
     var square = document.getElementById("P2_square"+cell);
     var cellNumber = parseInt(cell);
     var cellVal = parseInt(square.innerText);
@@ -226,17 +243,31 @@ function updateBingo_P2(cell) {
       square.style.backgroundColor = "green";
     }
     else {
-      square.style.backgroundColor = "#A93226";
-      score_P2=score_P2-2;
-      document.getElementById("P2_Score").innerHTML = score_P2;
+      if(!isRoboPlay){
+        square.style.backgroundColor = "#A93226";
+        score_P2=score_P2-2;
+        document.getElementById("P2_Score").innerHTML = score_P2;
+    }
     }
   }
 }
-
+function runTotalProgressbar(totalTime) {
+  var elem = document.getElementById("myBar");   
+  var width = 1;
+  var id = setInterval(frame, 1700);
+  function frame() {
+    if (width >= totalTime/1700) {
+      clearInterval(id);
+    } else {
+      width+=1; 
+      elem.style.width = width + '%'; 
+    }
+  }
+}
 function updateClaim_P1(claim) {
   if(canClaim) {
     if(claim<14) {
-      var claimElem=document.getElementById("P1_claim"+claim);
+      var claimElem=document.getElementById("P1_claim_cell"+claim);
       claimElem.style.backgroundColor = "green"
       claimArray_P1[claim] = true;
       claimSuccessArray_P1[claim] = 1;
@@ -245,7 +276,7 @@ function updateClaim_P1(claim) {
 }function updateClaim_P2(claim) {
   if(canClaim) {
     if(claim<14) {
-      var claimElem=document.getElementById("P2_claim"+claim);
+      var claimElem=document.getElementById("P2_claim_cell"+claim);
       claimElem.style.backgroundColor = "green"
       claimArray_P2[claim] = true;
       claimSuccessArray_P2[claim] = 1;
@@ -279,36 +310,45 @@ function startTheGame() {
     updateLuckyNum();
     document.getElementById("P1_Score").innerHTML = 0;
     document.getElementById("P2_Score").innerHTML = 0;
-    if(debug) {
+    runTheGame();
+  }
+}
+
+function runTheGame() {
+  if(debug) {
       var baseInterval = 10000;
       var intervalExec = setInterval(updateLuckyNum, baseInterval);
       var runnerObj = setTimeout(finishGame, 250000);
     }
     else {
-      var baseInterval = 9000;
-      var intervalExec = setInterval(updateLuckyNum, baseInterval);
-      //var timeTaken1 = baseInterval*14; 
-     var intervalSplit1 = setTimeout(reduceInterval,126000);
-      //baseInterval = baseInterval - 3000;
-      //var timeTaken2 = timeTaken1+(baseInterval - 4000)*12; 
-      var intervalSplit2 = setTimeout(reduceInterval,186000);
-      //baseInterval = baseInterval - 4000;
-      //var timeTaken3 = timeTaken2+(baseInterval - 4000)*10; 
-      var runnerObj = setTimeout(finishGame, 196000);
-      //var runnerObj = setTimeout(finishGame, 157000);
-    }
-      function reduceInterval() {
+      var intervalExec = setInterval(updateLuckyNum, startInterval);
+      runTotalProgressbar(maxTime);
+      //var interval1 = setTimeout(reduceInterval,80000);
+       var timer1 = setTimeout(function(){
+              reduceInterval(2000);
+          },64000);
+       var timer2 = setTimeout(function(){
+              reduceInterval(2000);
+          },112000);
+      var timer3 = setTimeout(function(){
+             reduceInterval(2000);
+         },144000);
+    
+      
+        
+      var runnerObj = setTimeout(finishGame, maxTime);
+    
+      function reduceInterval(time) {
         clearInterval(intervalExec);
-        baseInterval = baseInterval - 4000;
-        canClaim = false;
-        intervalExec = setInterval(updateLuckyNum, baseInterval);
+        startInterval = startInterval - time;
+        intervalExec = setInterval(updateLuckyNum, startInterval);
       }
       function finishGame() {
         clearInterval(intervalExec);
         publishWinner();
         canClaim = true;
       }
-  }
+    }
 }
 
 function finalScoreUpdate() {
@@ -359,8 +399,61 @@ function updateLuckyNum() {
   luckyNumCount=luckyNumCount+1;
  
   document.getElementById("luckyNum").innerHTML = luckyNumber;
-  // luckyNumCount=luckyNumCount+1;
-  // document.getElementById("luckCount").innerHTML = luckyNumCount;
+ 
+  if(luckyNumCount>=20){
+    canClaim = false;
+  }
+
+  if(isRoboPlay) {
+    //alert("Check Value");
+    for(var i=0;i<bingoTable_P2.length;i++) {
+      if(bingoTable_P2[i]==luckyNumber) {
+        //alert("Check Value");
+              var timer = setTimeout(function(){
+              update_Robo(i);
+          },500);
+        
+        break;
+      }
+    }
+    
+  }
+}
+function update_Robo(cell) {
+  updateBingo_P2(cell);
+  if(canClaim) {
+    makeClaim(bingoRunningTable_P2,cell);
+  }
+  
+}
+function makeClaim(bingoArray,cell) {
+  claimScoreRobo[0]=claimScoreRobo[0]+1;
+  if(cell==0 || cell==4 || cell==20 || cell==24) {
+      claimScoreRobo[1]=claimScoreRobo[1]+1;
+  }
+  var col = cell%5;
+  var row = Math.floor(cell/5);
+  claimScoreRobo[7+col] = claimScoreRobo[7+col]+1;
+  claimScoreRobo[2+row] = claimScoreRobo[2+row]+1;
+  var maxRowScore=claimScoreRobo[2];
+  var maxColScore=claimScoreRobo[7];
+  for(var j=1;j<5;j++) {
+      if(maxRowScore<claimScoreRobo[2+j]) {
+        maxRowScore = claimScoreRobo[2+j];
+       
+      }
+      if(maxColScore<claimScoreRobo[7+j]) {
+        maxColScore = claimScoreRobo[7+j];
+      }
+  }
+  claimScoreRobo[12]= maxRowScore;
+  claimScoreRobo[13]= maxColScore;
+  for(var i=0;i<claimScoreRobo.length;i++) {
+     var probability = (claimScoreRobo[i]/claimMaxScore[i])*100;
+     if(probability>=50) {
+        updateClaim_P2(i);
+       }
+  }
 }
 function getLuckyNumber() {
 
@@ -399,7 +492,7 @@ function checkPatternExist(player,bingoArray) {
           }
           if(claimArray_P1[12] && claimSuccessArray_P1[12] != 2) {
              claimSuccessArray_P1[12] = 2;
-             score_P1=score_P1+5;
+             score_P1=score_P1+10;
           }
         }
       }
@@ -415,7 +508,7 @@ function checkPatternExist(player,bingoArray) {
           }
           if(claimArray_P1[13] && claimSuccessArray_P1[13] != 2) {
              claimSuccessArray_P1[13] = 2;
-             score_P1=score_P1+5;
+             score_P1=score_P1+10;
           }
         }
       }
@@ -465,7 +558,7 @@ function checkPatternExist(player,bingoArray) {
           }
           if(claimArray_P2[12] && claimSuccessArray_P2[12] != 2) {
              claimSuccessArray_P2[12] = 2;
-             score_P2=score_P2+5;
+             score_P2=score_P2+10;
           }
         }
       }
@@ -481,7 +574,7 @@ function checkPatternExist(player,bingoArray) {
           }
           if(claimArray_P2[13] && claimSuccessArray_P2[13] != 2) {
              claimSuccessArray_P2[13] = 2;
-             score_P2=score_P2+5;
+             score_P2=score_P2+10;
           }
         }
       }
