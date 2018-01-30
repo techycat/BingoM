@@ -31,7 +31,7 @@ var claimSuccessArray_P2 = new Array(14);
 
 var startInterval = 8000;
 var maxTime = 170000;
-
+var isDiffLevel =false;
 var isRoboPlay = true;
 var claimScoreRobo = new Array(14);
 var claimMaxScore = [25,4,5,5,5,5,5,5,5,5,5,5,5,5];
@@ -50,6 +50,7 @@ function setUP() {
   isPlayer2_Ready=false;
   isGameRunning = false;
   canClaim = true;
+  isDiffLevel = false;
 
   for(var k=0; k<claimArray_P1.length; k++) {
       claimArray_P1[k] = false;
@@ -67,7 +68,9 @@ function playRobo() {
   startGame_P2();
 }
 function playDiffLevel() {
-  startInterval=8000;
+  isDiffLevel = true;
+  startInterval=7000;
+//  maxTime = 166000;
   var diffLevel=document.getElementById('diffLevel');
   diffLevel.style.backgroundColor='green';
 }
@@ -252,7 +255,7 @@ function updateBingo_P2(cell) {
   }
 }
 function runTotalProgressbar(totalTime) {
-  var elem = document.getElementById("myBar");   
+  var elem = document.getElementById("progressBar");   
   var width = 1;
   var id = setInterval(frame, 1700);
   function frame() {
@@ -380,7 +383,7 @@ function publishWinner() {
       //alert("It's Tie");
       document.getElementById("winnerText").innerHTML = "It's Tie";
     }
-    //alert("luckyNumCount : "+luckyNumCount);
+   // alert("luckyNumCount : "+luckyNumCount);
     var newGame = setTimeout(reloadNew, 30000); 
     function reloadNew() {
       location.reload();
@@ -399,9 +402,15 @@ function updateLuckyNum() {
   luckyNumCount=luckyNumCount+1;
  
   document.getElementById("luckyNum").innerHTML = luckyNumber;
- 
-  if(luckyNumCount>=20){
-    canClaim = false;
+  if(isDiffLevel && luckyNumCount>=27){
+      canClaim = false;
+      var progressBar=document.getElementById('progressBar');
+      progressBar.style.backgroundColor='#8B0000';
+  }
+  if(!isDiffLevel && luckyNumCount>=20){
+      canClaim = false;
+      var progressBar=document.getElementById('progressBar');
+      progressBar.style.backgroundColor='#8B0000';
   }
 
   if(isRoboPlay) {
@@ -435,23 +444,19 @@ function makeClaim(bingoArray,cell) {
   var row = Math.floor(cell/5);
   claimScoreRobo[7+col] = claimScoreRobo[7+col]+1;
   claimScoreRobo[2+row] = claimScoreRobo[2+row]+1;
-  var maxRowScore=claimScoreRobo[2];
-  var maxColScore=claimScoreRobo[7];
-  for(var j=1;j<5;j++) {
-      if(maxRowScore<claimScoreRobo[2+j]) {
-        maxRowScore = claimScoreRobo[2+j];
-       
-      }
-      if(maxColScore<claimScoreRobo[7+j]) {
-        maxColScore = claimScoreRobo[7+j];
-      }
-  }
-  claimScoreRobo[12]= maxRowScore;
-  claimScoreRobo[13]= maxColScore;
+  
   for(var i=0;i<claimScoreRobo.length;i++) {
      var probability = (claimScoreRobo[i]/claimMaxScore[i])*100;
      if(probability>=50) {
         updateClaim_P2(i);
+        if(i>=2 && i<7) {
+          claimScoreRobo[12]= claimScoreRobo[i];
+          updateClaim_P2(12);
+        }
+        if(i>=7 && i<12) {
+          claimScoreRobo[13]= claimScoreRobo[i];
+          updateClaim_P2(13);
+        }
        }
   }
 }

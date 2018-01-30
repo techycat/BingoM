@@ -58,15 +58,15 @@ h1, p {
     color: white;
 }
 
-#myProgress {
+#progress {
   width: 100%;
   background-color: #ddd;
 }
 
-#myBar {
+#progressBar {
   width: 1%;
   height: 12px;
-  background-color: red;
+  background-color: green;
 }
 
 .triggers {
